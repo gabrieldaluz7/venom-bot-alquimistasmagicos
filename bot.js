@@ -109,6 +109,10 @@ async function sendManyMessages(phoneUs, messages) {
     }
 }
 
+function isUserAdmin(userId) {
+    return usersAdmin.includes(userId);
+}
+
 function log(msg) {
     if (__DEBUG__LOG___) console.log(msg);
 }

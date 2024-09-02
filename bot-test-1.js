@@ -2,6 +2,10 @@ const venom = require('venom-bot');
 
 let client; 
 
+// Telefone que o bot está instalado
+const phoneBot = "17374435069@c.us";
+
+
 // Inicia o Venom
 venom.create({ session: 'v1', multidevice: true, headless: false })
     .then(createdClient => { client = createdClient; start(); })
