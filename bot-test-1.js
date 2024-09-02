@@ -25,7 +25,6 @@ function start() {
         }
     });
 
-
 }
 
 async function getGroupMembersInfo(groupId) {
