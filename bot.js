@@ -43,7 +43,6 @@ function start() {
         
         console.log('client.onMessage => ', message);
 
-
         // caso mensagem.to seja igual do phonebot.
         message.to = (message.to == phoneBot) ? message.from : message.to;
 
@@ -54,14 +53,9 @@ function start() {
         const args = message.content ? message.content.trim().split(' ') : [];
         const command = args.length > 0 ? args.shift().toLowerCase() : '';
 
-        // Verifica se a mensagem é de um grupo
-        if (message.isGroupMsg && groupsBot.includes(message.groupInfo.id)) {
-
-            if (command.startsWith('!')) {
+        if (command.startsWith('!')) {
                     
-                await executeCommand(message, command, args);
-            }
-
+            await executeCommand(message, command, args);
         }
 
     });
@@ -71,6 +65,7 @@ function start() {
 async function executeCommand(mensagem, command, args) 
 {
     console.log(mensagem.from+' executando comando: '+command+' '+args);   
+    
     switch (command) 
     {
         case '!comandos':
@@ -83,6 +78,7 @@ async function executeCommand(mensagem, command, args)
             await exec_regras_grupo(mensagem);
             break;
     }
+
 }
 
 async function exec_comandos(mensagem) 
