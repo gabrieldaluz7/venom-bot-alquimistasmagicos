@@ -9,32 +9,19 @@ const phoneBot = "17374435069@c.us";
 
 // Usuários admins
 const usersAdmin = [
-    phoneBot, // PhoneBot
-    "556784660441@c.us" // Gabriel da Luz Pessoal
-];
-
-const groupsBot = [
-    "120363169826642222@g.us", // Grupo Alquimistas Mágicos
-    "120363330220244715@g.us" // Grupo TESTER
+    phoneBot // PhoneBot
+//    "556784660441@c.us" // Gabriel da Luz Pessoal
 ];
 
 // Textos
 const texts = {
     pix: require('./includes/pix.js'),
     loja: require('./includes/loja.js'),
-    links: require('./includes/links.js'),
-    livros: require('./includes/livros.js'),
-    comandos: require('./includes/comandos.js'),
-    comandosGrupos: require('./includes/comandosGrupos.js'),
-    grupoLink: require('./includes/grupoLinks.js'),
-    beneficios: require('./includes/beneficios.js'),
-    curiosidades: require('./includes/curiosidades.js'),
-    regrasGrupos: require('./includes/regrasGrupos.js'),
-    frasesMotivacionais: require('./includes/frasesMotivacionais.js')
+    comandos: require('./includes/comandos.js')
 };
 
 // Inicia o Venom
-venom.create({ session: 'v1', multidevice: true, headless: false })
+venom.create({ session: 'v2', multidevice: true, headless: false })
     .then(createdClient => { client = createdClient; start(); })
     .catch(erro => log(erro));
 
@@ -42,8 +29,6 @@ venom.create({ session: 'v1', multidevice: true, headless: false })
 function start() {
     client.onMessage(async (message) => {
 
-        if(!message.isGroupMsg) { return false; }
-        
         message.to = (message.to == phoneBot) ? message.from : message.to;
 
         const args = message.content?.trim().split(' ') || [];
@@ -62,13 +47,12 @@ function start() {
 }
 
 async function executeCommand(message, command, args) {
-
     log(`${message.from} executando comando: ${command} ${args}`);
 
     const commands = {
-        '!comandos': exec_comandos,
-        '!grupolink': exec_grupolink,
-        '!regras': exec_regras_grupo
+        '!comandos': exec_comandos
+       
+      
     };
 
     const commandFunc = commands[command];
@@ -80,7 +64,7 @@ async function executeCommand(message, command, args) {
 }
 
 async function exec_comandos(message) {
-    const messages = texts.comandosGrupos;
+    const messages = texts.comandos;
     await sendManyMessages(message.to, messages);
 }
 
@@ -89,7 +73,13 @@ async function exec_grupolink(message) {
 }
 
 async function exec_regras_grupo(message) {
-    const messages = texts.regrasGrupos;
+    const messages = message.isGroupMsg ? texts.regrasGrupos : [
+        "Olá, amigo! 😄",
+        "Você ainda não faz parte do nosso grupo Aprendiz de Alquimistas Mágicos.",
+        "Junte-se a nós para compartilhar conhecimento e experiências mágicas!",
+        "*_Clique no link para participar:_*",
+        "https://chat.whatsapp.com/Jbvo0bfMziCH8gNafwyAT8"
+    ];
     await sendManyMessages(message.to, messages);
 }
 
