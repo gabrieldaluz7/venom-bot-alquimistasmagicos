@@ -1,6 +1,9 @@
 # Ignore node_modules
 node_modules/
 
+#ignore tokens
+tokens/
+
 # Ignore arquivos de configuração específicos do ambiente
 .env
 *.env
