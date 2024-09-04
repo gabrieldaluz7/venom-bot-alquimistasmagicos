@@ -29,6 +29,8 @@ venom.create({ session: 'v2', multidevice: true, headless: false })
 function start() {
     client.onMessage(async (message) => {
 
+        if(message.isGroupMsg) { return false; }
+    
         message.to = (message.to == phoneBot) ? message.from : message.to;
 
         const args = message.content?.trim().split(' ') || [];
@@ -68,20 +70,6 @@ async function exec_comandos(message) {
     await sendManyMessages(message.to, messages);
 }
 
-async function exec_grupolink(message) {
-    await sendManyMessages(message.to, texts.grupoLink);
-}
-
-async function exec_regras_grupo(message) {
-    const messages = message.isGroupMsg ? texts.regrasGrupos : [
-        "Olá, amigo! 😄",
-        "Você ainda não faz parte do nosso grupo Aprendiz de Alquimistas Mágicos.",
-        "Junte-se a nós para compartilhar conhecimento e experiências mágicas!",
-        "*_Clique no link para participar:_*",
-        "https://chat.whatsapp.com/Jbvo0bfMziCH8gNafwyAT8"
-    ];
-    await sendManyMessages(message.to, messages);
-}
 
 // ~~~~~~~~~~~~~~~~~~~~~~~~~ Funções Gerais ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
