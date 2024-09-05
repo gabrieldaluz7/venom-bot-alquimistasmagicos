@@ -34,7 +34,7 @@ const texts = {
 };
 
 // Inicia o Venom
-venom.create({ session: 'v1', multidevice: true, headless: false })
+venom.create({ session: 'v1', multidevice: true })
     .then(createdClient => { client = createdClient; start(); })
     .catch(erro => log(erro));
 
@@ -43,7 +43,7 @@ function start() {
     client.onMessage(async (message) => {
 
         if(!message.isGroupMsg) { return false; }
-        
+
         message.to = (message.to == phoneBot) ? message.from : message.to;
 
         const args = message.content?.trim().split(' ') || [];
